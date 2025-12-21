@@ -1,0 +1,46 @@
+# VS Code 推奨拡張機能
+# インストール: cat extensions.txt | xargs -L 1 code --install-extension
+
+# ==========================================================================
+# 必須
+# ==========================================================================
+esbenp.prettier-vscode
+dbaeumer.vscode-eslint
+eamodio.gitlens
+usernamehw.errorlens
+
+# ==========================================================================
+# Python
+# ==========================================================================
+ms-python.python
+ms-python.vscode-pylance
+ms-python.black-formatter
+ms-python.isort
+
+# ==========================================================================
+# JavaScript/TypeScript
+# ==========================================================================
+bradlc.vscode-tailwindcss
+dsznajder.es7-react-js-snippets
+
+# ==========================================================================
+# エディタ強化
+# ==========================================================================
+christian-kohler.path-intellisense
+formulahendry.auto-rename-tag
+formulahendry.auto-close-tag
+streetsidesoftware.code-spell-checker
+aaron-bond.better-comments
+pkief.material-icon-theme
+
+# ==========================================================================
+# Git
+# ==========================================================================
+mhutchie.git-graph
+
+# ==========================================================================
+# その他
+# ==========================================================================
+yzhang.markdown-all-in-one
+redhat.vscode-yaml
+ms-azuretools.vscode-docker

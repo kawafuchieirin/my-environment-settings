@@ -1,0 +1,123 @@
+[
+    // ==========================================================================
+    // ファイル操作
+    // ==========================================================================
+    {
+        "key": "cmd+shift+e",
+        "command": "workbench.view.explorer"
+    },
+
+    // ==========================================================================
+    // 行操作
+    // ==========================================================================
+    {
+        "key": "cmd+shift+d",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+up",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+down",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+shift+k",
+        "command": "editor.action.deleteLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+
+    // ==========================================================================
+    // マルチカーソル
+    // ==========================================================================
+    {
+        "key": "cmd+d",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+shift+l",
+        "command": "editor.action.selectHighlights",
+        "when": "editorFocus"
+    },
+
+    // ==========================================================================
+    // ターミナル
+    // ==========================================================================
+    {
+        "key": "ctrl+`",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "ctrl+shift+`",
+        "command": "workbench.action.terminal.new"
+    },
+
+    // ==========================================================================
+    // サイドバー・パネル
+    // ==========================================================================
+    {
+        "key": "cmd+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+j",
+        "command": "workbench.action.togglePanel"
+    },
+
+    // ==========================================================================
+    // 検索・置換
+    // ==========================================================================
+    {
+        "key": "cmd+shift+f",
+        "command": "workbench.action.findInFiles"
+    },
+    {
+        "key": "cmd+shift+h",
+        "command": "workbench.action.replaceInFiles"
+    },
+
+    // ==========================================================================
+    // コード操作
+    // ==========================================================================
+    {
+        "key": "cmd+/",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+f",
+        "command": "editor.action.formatDocument",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "f2",
+        "command": "editor.action.rename",
+        "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "f12",
+        "command": "editor.action.goToDeclaration",
+        "when": "editorHasDefinitionProvider && editorTextFocus"
+    },
+
+    // ==========================================================================
+    // 分割エディタ
+    // ==========================================================================
+    {
+        "key": "cmd+\\",
+        "command": "workbench.action.splitEditor"
+    },
+    {
+        "key": "cmd+1",
+        "command": "workbench.action.focusFirstEditorGroup"
+    },
+    {
+        "key": "cmd+2",
+        "command": "workbench.action.focusSecondEditorGroup"
+    }
+]

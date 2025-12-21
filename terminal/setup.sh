@@ -1,0 +1,119 @@
+#!/bin/bash
+set -e
+
+echo "=== macOS Terminal セットアップ ==="
+echo ""
+
+# Homebrewのインストール確認
+if ! command -v brew &> /dev/null; then
+    echo "Homebrewをインストール中..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Apple Silicon対応
+    if [[ $(uname -m) == "arm64" ]]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+else
+    echo "Homebrew: インストール済み"
+fi
+
+# Nerd Fontのインストール
+echo ""
+echo "=== Nerd Fontをインストール中 ==="
+brew tap homebrew/cask-fonts 2>/dev/null || true
+brew install --cask font-jetbrains-mono-nerd-font
+
+# CLIツールのインストール
+echo ""
+echo "=== CLIツールをインストール中 ==="
+brew install eza bat fzf zoxide ripgrep delta lazygit tldr jq
+
+# fzfのキーバインド設定
+$(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish
+
+# zshプラグインのインストール（スタンドアロン）
+echo ""
+echo "=== zshプラグインをインストール中 ==="
+
+# zsh-syntax-highlighting
+if ! brew list zsh-syntax-highlighting &>/dev/null; then
+    brew install zsh-syntax-highlighting
+    echo "zsh-syntax-highlighting: インストールしました"
+else
+    echo "zsh-syntax-highlighting: インストール済み"
+fi
+
+# zsh-autosuggestions
+if ! brew list zsh-autosuggestions &>/dev/null; then
+    brew install zsh-autosuggestions
+    echo "zsh-autosuggestions: インストールしました"
+else
+    echo "zsh-autosuggestions: インストール済み"
+fi
+
+# zsh-history-substring-search（↑↓キーで部分一致検索）
+if ! brew list zsh-history-substring-search &>/dev/null; then
+    brew install zsh-history-substring-search
+    echo "zsh-history-substring-search: インストールしました"
+else
+    echo "zsh-history-substring-search: インストール済み"
+fi
+
+# Atuin（高機能シェル履歴管理）
+echo ""
+echo "=== Atuinをインストール中 ==="
+if ! command -v atuin &> /dev/null; then
+    brew install atuin
+    echo "Atuin: インストールしました"
+else
+    echo "Atuin: インストール済み"
+fi
+
+# Python環境（pyenv）のインストール
+echo ""
+echo "=== pyenvをインストール中 ==="
+if ! command -v pyenv &> /dev/null; then
+    brew install pyenv pyenv-virtualenv
+else
+    echo "pyenv: インストール済み"
+fi
+
+# 設定ファイルのバックアップとコピー
+echo ""
+echo "=== 設定ファイルを配置中 ==="
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# .zshrcのバックアップと配置
+if [ -f "$HOME/.zshrc" ]; then
+    cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d%H%M%S)"
+    echo ".zshrcをバックアップしました"
+fi
+cp "$SCRIPT_DIR/.zshrc" "$HOME/.zshrc"
+echo ".zshrcを配置しました"
+
+# .gitconfigのコピー
+if [ -f "$SCRIPT_DIR/.gitconfig" ]; then
+    if [ -f "$HOME/.gitconfig" ]; then
+        cp "$HOME/.gitconfig" "$HOME/.gitconfig.backup.$(date +%Y%m%d%H%M%S)"
+        echo ".gitconfigをバックアップしました"
+    fi
+    cp "$SCRIPT_DIR/.gitconfig" "$HOME/.gitconfig"
+    echo ".gitconfigを配置しました"
+fi
+
+# ターミナルテーマのインポート案内
+echo ""
+echo "=== セットアップ完了 ==="
+echo ""
+echo "次のステップ:"
+echo "1. ターミナルを再起動してください"
+echo "2. ターミナル > 設定 > プロファイル でフォントを 'JetBrainsMono Nerd Font' に変更"
+echo "3. 'Light-Clean.terminal' をダブルクリックしてテーマをインポート"
+echo "4. インポートしたテーマをデフォルトに設定"
+echo ""
+echo "追加したツール:"
+echo "- delta: git diffを美しく表示"
+echo "- lazygit: 'lg' でGUIのようなgit操作"
+echo "- tldr: 'tl <コマンド>' でコマンドの使用例を表示"
+echo "- jq: JSONの整形・フィルタリング"

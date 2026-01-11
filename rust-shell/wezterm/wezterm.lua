@@ -69,7 +69,7 @@ config.font = wezterm.font_with_fallback {
 -- ============================================
 -- カラースキーム (色のテーマ)
 -- 他のテーマ例: 'Dracula', 'Solarized Dark', 'One Dark', 'Catppuccin Mocha'
-config.color_scheme = 'Tokyo Night'
+config.color_scheme = 'Dracula'
 
 -- ウィンドウの透明度 (0.0=完全透明 〜 1.0=不透明)
 config.window_background_opacity = 0.92

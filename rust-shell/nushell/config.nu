@@ -301,16 +301,27 @@ def help-wezterm [] {
   Cmd + Shift + [ 前のタブ
   Cmd + Shift + ] 次のタブ
 
-【ペイン操作】
-  Cmd + D         縦にペイン分割
-  Cmd + Shift + D 横にペイン分割
+【ペイン分割】
+  Cmd + D         縦にペイン分割（左右に分かれる）
+  Cmd + Shift + D 横にペイン分割（上下に分かれる）
+
+【ペイン移動】
   Cmd + ←/→/↑/↓   ペイン間を移動
+
+【ペインサイズ変更】
+  Option + Shift + ←  ペインを左に縮小
+  Option + Shift + →  ペインを右に拡大
+  Option + Shift + ↑  ペインを上に縮小
+  Option + Shift + ↓  ペインを下に拡大
+
+【透明度調整】
+  Ctrl + Cmd + ↑  透明度を上げる（不透明に）
+  Ctrl + Cmd + ↓  透明度を下げる（透明に）
+  Ctrl + Cmd + 0  透明度をリセット（92%）
 
 【その他】
   Cmd + K         スクロールバッファをクリア
   Cmd + F         検索
-  Ctrl + Cmd + ↑  透明度を上げる
-  Ctrl + Cmd + ↓  透明度を下げる
   Cmd + +/-       フォントサイズ変更
   Cmd + 0         フォントサイズリセット
 "#

@@ -183,6 +183,34 @@ config.keys = {
     },
 
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    -- ペインサイズの変更 (Option + Shift + 矢印キー)
+    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    -- Option + Shift + ←: ペインを左に縮小
+    {
+        key = 'LeftArrow',
+        mods = 'ALT|SHIFT',
+        action = wezterm.action.AdjustPaneSize { 'Left', 5 },
+    },
+    -- Option + Shift + →: ペインを右に拡大
+    {
+        key = 'RightArrow',
+        mods = 'ALT|SHIFT',
+        action = wezterm.action.AdjustPaneSize { 'Right', 5 },
+    },
+    -- Option + Shift + ↑: ペインを上に縮小
+    {
+        key = 'UpArrow',
+        mods = 'ALT|SHIFT',
+        action = wezterm.action.AdjustPaneSize { 'Up', 5 },
+    },
+    -- Option + Shift + ↓: ペインを下に拡大
+    {
+        key = 'DownArrow',
+        mods = 'ALT|SHIFT',
+        action = wezterm.action.AdjustPaneSize { 'Down', 5 },
+    },
+
+    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     -- その他の便利なショートカット
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     -- Cmd + K: 画面をクリア
@@ -240,6 +268,12 @@ return config
 -- Cmd + +        : 文字を大きく
 -- Cmd + -        : 文字を小さく
 -- Cmd + 0        : 文字サイズをリセット
+--
+-- ペインサイズの変更:
+-- Option + Shift + ←: ペインを左に縮小
+-- Option + Shift + →: ペインを右に拡大
+-- Option + Shift + ↑: ペインを上に縮小
+-- Option + Shift + ↓: ペインを下に拡大
 --
 -- 透過度の調整:
 -- Ctrl + Cmd + ↑: 透過度を上げる (不透明に)

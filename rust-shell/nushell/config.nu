@@ -141,6 +141,7 @@ alias ff = fd      # find files (fd) - Nushell の find はビルトイン
 alias top = btop
 alias vim = hx
 alias vi = hx
+alias rdock = killall Dock  # Dockを再起動
 
 # zoxide の初期化
 source ~/.cache/zoxide.nu

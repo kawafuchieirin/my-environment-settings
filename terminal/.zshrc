@@ -186,6 +186,7 @@ alias h='history'
 alias grep='grep --color=auto'
 alias x='exit'
 alias r='exec zsh'  # 設定再読み込み
+alias rdock='killall Dock'  # Dockを再起動
 
 # 新しいツール
 alias tl='tldr'  # コマンドの使い方を簡潔に表示

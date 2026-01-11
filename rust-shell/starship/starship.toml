@@ -1,0 +1,146 @@
+# Starship Prompt Configuration
+# このファイルを ~/.config/starship.toml にコピーしてください
+
+# プロンプトのフォーマット
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$rust\
+$nodejs\
+$python\
+$golang\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# 右側のプロンプト
+right_format = """$time"""
+
+# 新しい行を追加
+add_newline = true
+
+# コマンドタイムアウト
+command_timeout = 1000
+
+# キャラクター設定
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# ディレクトリ
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+read_only = " 🔒"
+read_only_style = "red"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+# Git ブランチ
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "on [$symbol$branch]($style) "
+
+# Git ステータス
+[git_status]
+conflicted = "⚔️ "
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "📦"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+style = "bold yellow"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+# Git の状態 (リベース、マージなど)
+[git_state]
+rebase = "REBASING"
+merge = "MERGING"
+revert = "REVERTING"
+cherry_pick = "CHERRY-PICKING"
+bisect = "BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+style = "bold yellow"
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+
+# Rust
+[rust]
+symbol = "🦀 "
+style = "bold red"
+format = "via [$symbol($version )]($style)"
+
+# Node.js
+[nodejs]
+symbol = "⬢ "
+style = "bold green"
+format = "via [$symbol($version )]($style)"
+detect_extensions = ["js", "mjs", "cjs", "ts", "mts", "cts"]
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+
+# Python
+[python]
+symbol = "🐍 "
+style = "bold yellow"
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+# Go
+[golang]
+symbol = "🐹 "
+style = "bold cyan"
+format = "via [$symbol($version )]($style)"
+
+# Docker
+[docker_context]
+symbol = "🐳 "
+style = "bold blue"
+format = "via [$symbol$context]($style) "
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+# コマンド実行時間
+[cmd_duration]
+min_time = 2_000
+style = "bold yellow"
+format = "took [$duration]($style) "
+show_milliseconds = false
+
+# 時刻 (右側)
+[time]
+disabled = false
+format = "[$time]($style)"
+style = "dimmed white"
+time_format = "%H:%M"
+
+# ユーザー名
+[username]
+style_user = "bold green"
+style_root = "bold red"
+format = "[$user]($style) "
+disabled = false
+show_always = false
+
+# ホスト名
+[hostname]
+ssh_only = true
+style = "bold green"
+format = "at [$hostname]($style) "
+
+# パッケージバージョン
+[package]
+disabled = true
+
+# バッテリー (オプション)
+[battery]
+disabled = true

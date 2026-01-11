@@ -1,0 +1,102 @@
+# Helix Editor Configuration
+# このファイルを ~/.config/helix/config.toml にコピーしてください
+
+theme = "tokyonight"
+
+[editor]
+line-number = "relative"
+mouse = true
+scrolloff = 5
+cursorline = true
+auto-completion = true
+auto-format = true
+auto-save = true
+idle-timeout = 400
+completion-trigger-len = 1
+bufferline = "multiple"
+color-modes = true
+true-color = true
+rulers = [80, 120]
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+parents = true
+ignore = true
+git-ignore = true
+git-global = true
+git-exclude = true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+center = []
+right = ["diagnostics", "selections", "register", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "|"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+auto-signature-help = true
+
+[editor.indent-guides]
+render = true
+character = "│"
+skip-levels = 1
+
+[editor.gutters]
+layout = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+tab = "→"
+newline = "⏎"
+tabpad = "·"
+
+[editor.soft-wrap]
+enable = true
+max-wrap = 25
+max-indent-retain = 0
+wrap-indicator = "↪ "
+
+[keys.normal]
+# ファイルピッカー
+space.f = "file_picker"
+space.b = "buffer_picker"
+space.s = "symbol_picker"
+
+# ウィンドウ操作
+space.w.v = "vsplit"
+space.w.s = "hsplit"
+space.w.q = "wclose"
+space.w.o = "wonly"
+
+# LSP
+space.l.r = "rename_symbol"
+space.l.a = "code_action"
+space.l.d = "goto_definition"
+space.l.i = "goto_implementation"
+space.l.t = "goto_type_definition"
+
+# 便利なショートカット
+C-s = ":w"
+C-q = ":q"
+
+# 行操作
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+[keys.insert]
+C-s = ["normal_mode", ":w"]

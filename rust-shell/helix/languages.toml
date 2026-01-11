@@ -1,0 +1,119 @@
+# Helix Languages Configuration
+# このファイルを ~/.config/helix/languages.toml にコピーしてください
+
+# Rust
+[[language]]
+name = "rust"
+auto-format = true
+language-servers = ["rust-analyzer"]
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
+
+[language-server.rust-analyzer.config]
+check.command = "clippy"
+cargo.features = "all"
+procMacro.enable = true
+
+# TypeScript / JavaScript
+[[language]]
+name = "typescript"
+auto-format = true
+language-servers = ["typescript-language-server"]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+
+[[language]]
+name = "javascript"
+auto-format = true
+language-servers = ["typescript-language-server"]
+formatter = { command = "prettier", args = ["--parser", "javascript"] }
+
+[[language]]
+name = "tsx"
+auto-format = true
+language-servers = ["typescript-language-server"]
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+
+[[language]]
+name = "jsx"
+auto-format = true
+language-servers = ["typescript-language-server"]
+formatter = { command = "prettier", args = ["--parser", "javascript"] }
+
+# Python
+[[language]]
+name = "python"
+auto-format = true
+language-servers = ["pylsp"]
+formatter = { command = "black", args = ["-", "--quiet"] }
+
+[language-server.pylsp]
+command = "pylsp"
+
+[language-server.pylsp.config.pylsp.plugins]
+ruff = { enabled = true }
+black = { enabled = true }
+
+# Go
+[[language]]
+name = "go"
+auto-format = true
+language-servers = ["gopls"]
+formatter = { command = "gofmt" }
+
+[language-server.gopls]
+command = "gopls"
+
+# JSON
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "json"] }
+
+# YAML
+[[language]]
+name = "yaml"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "yaml"] }
+
+# TOML
+[[language]]
+name = "toml"
+auto-format = true
+language-servers = ["taplo"]
+
+[language-server.taplo]
+command = "taplo"
+args = ["lsp", "stdio"]
+
+# Markdown
+[[language]]
+name = "markdown"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "markdown"] }
+
+# HTML
+[[language]]
+name = "html"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "html"] }
+
+# CSS
+[[language]]
+name = "css"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "css"] }
+
+# Nushell
+[[language]]
+name = "nu"
+auto-format = false
+
+# Lua
+[[language]]
+name = "lua"
+auto-format = true
+language-servers = ["lua-language-server"]
+
+[language-server.lua-language-server]
+command = "lua-language-server"

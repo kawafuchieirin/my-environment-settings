@@ -58,10 +58,11 @@ end)
 config.font_size = 14.0
 
 -- 使用するフォント (上から順に試して、見つかったものを使う)
+-- 透過背景でも読みやすいように Medium ウェイトを使用
 config.font = wezterm.font_with_fallback {
-    'JetBrains Mono',      -- プログラミング向けフォント
-    'Hack Nerd Font',      -- アイコン表示用フォント
-    'Menlo',               -- macOS 標準フォント (フォールバック)
+    { family = 'JetBrains Mono', weight = 'Medium' },  -- 太めで読みやすい
+    { family = 'Hack Nerd Font', weight = 'Medium' },  -- アイコン表示用
+    'Menlo',                                            -- macOS 標準フォント
 }
 
 -- ============================================
@@ -183,30 +184,30 @@ config.keys = {
     },
 
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- ペインサイズの変更 (Option + Shift + 矢印キー)
+    -- ペインサイズの変更 (Ctrl + Shift + 矢印キー)
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- Option + Shift + ←: ペインを左に縮小
+    -- Ctrl + Shift + ←: ペインを左に縮小
     {
         key = 'LeftArrow',
-        mods = 'ALT|SHIFT',
+        mods = 'CTRL|SHIFT',
         action = wezterm.action.AdjustPaneSize { 'Left', 5 },
     },
-    -- Option + Shift + →: ペインを右に拡大
+    -- Ctrl + Shift + →: ペインを右に拡大
     {
         key = 'RightArrow',
-        mods = 'ALT|SHIFT',
+        mods = 'CTRL|SHIFT',
         action = wezterm.action.AdjustPaneSize { 'Right', 5 },
     },
-    -- Option + Shift + ↑: ペインを上に縮小
+    -- Ctrl + Shift + ↑: ペインを上に縮小
     {
         key = 'UpArrow',
-        mods = 'ALT|SHIFT',
+        mods = 'CTRL|SHIFT',
         action = wezterm.action.AdjustPaneSize { 'Up', 5 },
     },
-    -- Option + Shift + ↓: ペインを下に拡大
+    -- Ctrl + Shift + ↓: ペインを下に拡大
     {
         key = 'DownArrow',
-        mods = 'ALT|SHIFT',
+        mods = 'CTRL|SHIFT',
         action = wezterm.action.AdjustPaneSize { 'Down', 5 },
     },
 
@@ -270,10 +271,10 @@ return config
 -- Cmd + 0        : 文字サイズをリセット
 --
 -- ペインサイズの変更:
--- Option + Shift + ←: ペインを左に縮小
--- Option + Shift + →: ペインを右に拡大
--- Option + Shift + ↑: ペインを上に縮小
--- Option + Shift + ↓: ペインを下に拡大
+-- Ctrl + Shift + ←: ペインを左に縮小
+-- Ctrl + Shift + →: ペインを右に拡大
+-- Ctrl + Shift + ↑: ペインを上に縮小
+-- Ctrl + Shift + ↓: ペインを下に拡大
 --
 -- 透過度の調整:
 -- Ctrl + Cmd + ↑: 透過度を上げる (不透明に)

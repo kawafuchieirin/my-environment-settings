@@ -85,21 +85,27 @@ echo "=== 設定ファイルを配置中 ==="
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # .zshrcのバックアップと配置
-if [ -f "$HOME/.zshrc" ]; then
-    cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d%H%M%S)"
-    echo ".zshrcをバックアップしました"
+echo ""
+read -p ".zshrcをシンボリックリンクで配置しますか？ (y/N): " copy_zshrc
+if [[ "$copy_zshrc" =~ ^[Yy]$ ]]; then
+    if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
+        mv "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d%H%M%S)"
+        echo ".zshrcをバックアップしました"
+    fi
+    ln -sf "$SCRIPT_DIR/.zshrc" "$HOME/.zshrc"
+    echo ".zshrcをシンボリックリンクで配置しました"
+else
+    echo ".zshrcの配置をスキップしました"
 fi
-cp "$SCRIPT_DIR/.zshrc" "$HOME/.zshrc"
-echo ".zshrcを配置しました"
 
-# .gitconfigのコピー
+# .gitconfigのシンボリックリンク配置
 if [ -f "$SCRIPT_DIR/.gitconfig" ]; then
-    if [ -f "$HOME/.gitconfig" ]; then
-        cp "$HOME/.gitconfig" "$HOME/.gitconfig.backup.$(date +%Y%m%d%H%M%S)"
+    if [ -f "$HOME/.gitconfig" ] && [ ! -L "$HOME/.gitconfig" ]; then
+        mv "$HOME/.gitconfig" "$HOME/.gitconfig.backup.$(date +%Y%m%d%H%M%S)"
         echo ".gitconfigをバックアップしました"
     fi
-    cp "$SCRIPT_DIR/.gitconfig" "$HOME/.gitconfig"
-    echo ".gitconfigを配置しました"
+    ln -sf "$SCRIPT_DIR/.gitconfig" "$HOME/.gitconfig"
+    echo ".gitconfigをシンボリックリンクで配置しました"
 fi
 
 # ターミナルテーマのインポート案内

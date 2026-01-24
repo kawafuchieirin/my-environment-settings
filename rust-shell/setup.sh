@@ -38,54 +38,55 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo ""
 echo "=== 設定ファイルを配置中 ==="
 
-# Nushell
+# Nushell (macOSでは ~/Library/Application Support/nushell/ を使用)
 echo "Nushell設定を配置中..."
-mkdir -p ~/.config/nushell
-if [ -f ~/.config/nushell/env.nu ]; then
-    cp ~/.config/nushell/env.nu ~/.config/nushell/env.nu.backup.$(date +%Y%m%d%H%M%S)
+NU_CONFIG_DIR="$HOME/Library/Application Support/nushell"
+mkdir -p "$NU_CONFIG_DIR"
+if [ -f "$NU_CONFIG_DIR/env.nu" ] && [ ! -L "$NU_CONFIG_DIR/env.nu" ]; then
+    mv "$NU_CONFIG_DIR/env.nu" "$NU_CONFIG_DIR/env.nu.backup.$(date +%Y%m%d%H%M%S)"
     echo "  env.nu をバックアップしました"
 fi
-if [ -f ~/.config/nushell/config.nu ]; then
-    cp ~/.config/nushell/config.nu ~/.config/nushell/config.nu.backup.$(date +%Y%m%d%H%M%S)
+if [ -f "$NU_CONFIG_DIR/config.nu" ] && [ ! -L "$NU_CONFIG_DIR/config.nu" ]; then
+    mv "$NU_CONFIG_DIR/config.nu" "$NU_CONFIG_DIR/config.nu.backup.$(date +%Y%m%d%H%M%S)"
     echo "  config.nu をバックアップしました"
 fi
-cp "$SCRIPT_DIR/nushell/env.nu" ~/.config/nushell/
-cp "$SCRIPT_DIR/nushell/config.nu" ~/.config/nushell/
-echo "  Nushell設定を配置しました"
+ln -sf "$SCRIPT_DIR/nushell/env.nu" "$NU_CONFIG_DIR/env.nu"
+ln -sf "$SCRIPT_DIR/nushell/config.nu" "$NU_CONFIG_DIR/config.nu"
+echo "  Nushell設定をシンボリックリンクで配置しました"
 
 # WezTerm
 echo "WezTerm設定を配置中..."
 mkdir -p ~/.config/wezterm
-if [ -f ~/.config/wezterm/wezterm.lua ]; then
-    cp ~/.config/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua.backup.$(date +%Y%m%d%H%M%S)
+if [ -f ~/.config/wezterm/wezterm.lua ] && [ ! -L ~/.config/wezterm/wezterm.lua ]; then
+    mv ~/.config/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua.backup.$(date +%Y%m%d%H%M%S)
     echo "  wezterm.lua をバックアップしました"
 fi
-cp "$SCRIPT_DIR/wezterm/wezterm.lua" ~/.config/wezterm/
-echo "  WezTerm設定を配置しました"
+ln -sf "$SCRIPT_DIR/wezterm/wezterm.lua" ~/.config/wezterm/wezterm.lua
+echo "  WezTerm設定をシンボリックリンクで配置しました"
 
 # Helix
 echo "Helix設定を配置中..."
 mkdir -p ~/.config/helix
-if [ -f ~/.config/helix/config.toml ]; then
-    cp ~/.config/helix/config.toml ~/.config/helix/config.toml.backup.$(date +%Y%m%d%H%M%S)
+if [ -f ~/.config/helix/config.toml ] && [ ! -L ~/.config/helix/config.toml ]; then
+    mv ~/.config/helix/config.toml ~/.config/helix/config.toml.backup.$(date +%Y%m%d%H%M%S)
     echo "  config.toml をバックアップしました"
 fi
-if [ -f ~/.config/helix/languages.toml ]; then
-    cp ~/.config/helix/languages.toml ~/.config/helix/languages.toml.backup.$(date +%Y%m%d%H%M%S)
+if [ -f ~/.config/helix/languages.toml ] && [ ! -L ~/.config/helix/languages.toml ]; then
+    mv ~/.config/helix/languages.toml ~/.config/helix/languages.toml.backup.$(date +%Y%m%d%H%M%S)
     echo "  languages.toml をバックアップしました"
 fi
-cp "$SCRIPT_DIR/helix/config.toml" ~/.config/helix/
-cp "$SCRIPT_DIR/helix/languages.toml" ~/.config/helix/
-echo "  Helix設定を配置しました"
+ln -sf "$SCRIPT_DIR/helix/config.toml" ~/.config/helix/config.toml
+ln -sf "$SCRIPT_DIR/helix/languages.toml" ~/.config/helix/languages.toml
+echo "  Helix設定をシンボリックリンクで配置しました"
 
 # Starship
 echo "Starship設定を配置中..."
-if [ -f ~/.config/starship.toml ]; then
-    cp ~/.config/starship.toml ~/.config/starship.toml.backup.$(date +%Y%m%d%H%M%S)
+if [ -f ~/.config/starship.toml ] && [ ! -L ~/.config/starship.toml ]; then
+    mv ~/.config/starship.toml ~/.config/starship.toml.backup.$(date +%Y%m%d%H%M%S)
     echo "  starship.toml をバックアップしました"
 fi
-cp "$SCRIPT_DIR/starship/starship.toml" ~/.config/
-echo "  Starship設定を配置しました"
+ln -sf "$SCRIPT_DIR/starship/starship.toml" ~/.config/starship.toml
+echo "  Starship設定をシンボリックリンクで配置しました"
 
 # ==========================================================================
 # zoxideの初期化

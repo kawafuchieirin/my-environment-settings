@@ -20,35 +20,64 @@ local config = wezterm.config_builder()
 -- 透過度の調整幅
 local opacity_step = 0.05
 -- 透過度の範囲
-local opacity_min = 0.5
+local opacity_min = 0.2
 local opacity_max = 1.0
+-- デフォルト値
+local default_opacity = 0.92
+
+-- 透過度に応じたフォントウェイトを取得
+local function get_font_weight(opacity)
+    -- 透過度が高い(不透明)ほど太いフォントを使用
+    if opacity >= 0.95 then
+        return 'Bold'
+    elseif opacity >= 0.85 then
+        return 'DemiBold'
+    elseif opacity >= 0.70 then
+        return 'Medium'
+    else
+        return 'Regular'
+    end
+end
+
+-- フォントを更新する関数
+local function update_font(overrides, opacity)
+    local weight = get_font_weight(opacity)
+    overrides.font = wezterm.font_with_fallback {
+        { family = 'Menlo', weight = weight },
+        { family = 'Hack Nerd Font Mono', weight = weight },
+    }
+    return weight
+end
 
 -- 透過度を上げる (より不透明に)
 wezterm.on('increase-opacity', function(window, _pane)
     local overrides = window:get_config_overrides() or {}
-    local current = overrides.window_background_opacity or 0.92
+    local current = overrides.window_background_opacity or default_opacity
     local new_opacity = math.min(current + opacity_step, opacity_max)
     overrides.window_background_opacity = new_opacity
+    local weight = update_font(overrides, new_opacity)
     window:set_config_overrides(overrides)
-    wezterm.log_info('Opacity: ' .. string.format('%.0f%%', new_opacity * 100))
+    wezterm.log_info('Opacity: ' .. string.format('%.0f%%', new_opacity * 100) .. ', Font: ' .. weight)
 end)
 
 -- 透過度を下げる (より透明に)
 wezterm.on('decrease-opacity', function(window, _pane)
     local overrides = window:get_config_overrides() or {}
-    local current = overrides.window_background_opacity or 0.92
+    local current = overrides.window_background_opacity or default_opacity
     local new_opacity = math.max(current - opacity_step, opacity_min)
     overrides.window_background_opacity = new_opacity
+    local weight = update_font(overrides, new_opacity)
     window:set_config_overrides(overrides)
-    wezterm.log_info('Opacity: ' .. string.format('%.0f%%', new_opacity * 100))
+    wezterm.log_info('Opacity: ' .. string.format('%.0f%%', new_opacity * 100) .. ', Font: ' .. weight)
 end)
 
 -- 透過度をリセット (デフォルト値に戻す)
 wezterm.on('reset-opacity', function(window, _pane)
     local overrides = window:get_config_overrides() or {}
-    overrides.window_background_opacity = 0.92
+    overrides.window_background_opacity = default_opacity
+    local weight = update_font(overrides, default_opacity)
     window:set_config_overrides(overrides)
-    wezterm.log_info('Opacity reset to 92%')
+    wezterm.log_info('Reset - Opacity: 92%, Font: ' .. weight)
 end)
 
 -- ============================================
@@ -59,9 +88,8 @@ config.font_size = 14.0
 
 -- 使用するフォント (上から順に試して、見つかったものを使う)
 config.font = wezterm.font_with_fallback {
-    'JetBrains Mono',      -- プログラミング向けフォント
-    'Hack Nerd Font',      -- アイコン表示用フォント
-    'Menlo',               -- macOS 標準フォント (フォールバック)
+    'Menlo',                     -- macOS標準（クリアで滲みにくい）
+    'Hack Nerd Font Mono',       -- アイコン表示用フォールバック
 }
 
 -- ============================================
@@ -69,13 +97,13 @@ config.font = wezterm.font_with_fallback {
 -- ============================================
 -- カラースキーム (色のテーマ)
 -- 他のテーマ例: 'Dracula', 'Solarized Dark', 'One Dark', 'Catppuccin Mocha'
-config.color_scheme = 'Tokyo Night'
+config.color_scheme = 'Dracula'
 
 -- ウィンドウの透明度 (0.0=完全透明 〜 1.0=不透明)
 config.window_background_opacity = 0.92
 
 -- macOS: ウィンドウの背景ぼかし (数字が大きいほどぼかし強)
-config.macos_window_background_blur = 5
+config.macos_window_background_blur = 1
 
 -- ウィンドウの余白 (文字とウィンドウ端の間隔)
 config.window_padding = {
@@ -129,85 +157,45 @@ config.scrollback_lines = 10000
 -- よく使う操作をキーボードで素早く実行できます
 config.keys = {
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- ペイン分割 (画面を分ける)
+    -- タブ操作
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- Cmd + D: 縦に分割 (左右に分かれる)
+    -- Cmd + D: 新しいタブを開く
     {
         key = 'd',
         mods = 'CMD',
-        action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+        action = wezterm.action.SpawnTab 'CurrentPaneDomain',
     },
-    -- Cmd + Shift + D: 横に分割 (上下に分かれる)
+    -- Cmd + Shift + D: 新しいタブを開く（同じ動作）
     {
         key = 'd',
         mods = 'CMD|SHIFT',
-        action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+        action = wezterm.action.SpawnTab 'CurrentPaneDomain',
     },
 
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- ペイン操作
+    -- タブを閉じる
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- Cmd + W: 今のペインを閉じる
+    -- Cmd + W: 今のタブを閉じる
     {
         key = 'w',
         mods = 'CMD',
-        action = wezterm.action.CloseCurrentPane { confirm = true },
+        action = wezterm.action.CloseCurrentTab { confirm = true },
     },
 
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- ペイン間の移動 (Cmd + 矢印キー)
+    -- タブ間の移動 (Cmd + 矢印キー)
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- Cmd + ←: 左のペインへ
+    -- Cmd + ←: 前のタブへ
     {
         key = 'LeftArrow',
         mods = 'CMD',
-        action = wezterm.action.ActivatePaneDirection 'Left',
+        action = wezterm.action.ActivateTabRelative(-1),
     },
-    -- Cmd + →: 右のペインへ
+    -- Cmd + →: 次のタブへ
     {
         key = 'RightArrow',
         mods = 'CMD',
-        action = wezterm.action.ActivatePaneDirection 'Right',
-    },
-    -- Cmd + ↑: 上のペインへ
-    {
-        key = 'UpArrow',
-        mods = 'CMD',
-        action = wezterm.action.ActivatePaneDirection 'Up',
-    },
-    -- Cmd + ↓: 下のペインへ
-    {
-        key = 'DownArrow',
-        mods = 'CMD',
-        action = wezterm.action.ActivatePaneDirection 'Down',
-    },
-
-    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- ペインサイズの変更 (Option + Shift + 矢印キー)
-    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    -- Option + Shift + ←: ペインを左に縮小
-    {
-        key = 'LeftArrow',
-        mods = 'ALT|SHIFT',
-        action = wezterm.action.AdjustPaneSize { 'Left', 5 },
-    },
-    -- Option + Shift + →: ペインを右に拡大
-    {
-        key = 'RightArrow',
-        mods = 'ALT|SHIFT',
-        action = wezterm.action.AdjustPaneSize { 'Right', 5 },
-    },
-    -- Option + Shift + ↑: ペインを上に縮小
-    {
-        key = 'UpArrow',
-        mods = 'ALT|SHIFT',
-        action = wezterm.action.AdjustPaneSize { 'Up', 5 },
-    },
-    -- Option + Shift + ↓: ペインを下に拡大
-    {
-        key = 'DownArrow',
-        mods = 'ALT|SHIFT',
-        action = wezterm.action.AdjustPaneSize { 'Down', 5 },
+        action = wezterm.action.ActivateTabRelative(1),
     },
 
     -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -258,22 +246,19 @@ return config
 -- ============================================
 -- メモ: よく使うショートカット一覧
 -- ============================================
+-- タブ操作:
 -- Cmd + T        : 新しいタブを開く
--- Cmd + W        : ペイン/タブを閉じる
--- Cmd + D        : 縦に画面分割
--- Cmd + Shift + D: 横に画面分割
--- Cmd + 矢印     : ペイン間移動
+-- Cmd + D        : 新しいタブを開く
+-- Cmd + W        : タブを閉じる
+-- Cmd + ←/→      : タブ間移動
+-- Cmd + 1-9      : タブを番号で切り替え
+--
+-- その他:
 -- Cmd + K        : 画面クリア
 -- Cmd + F        : 検索
 -- Cmd + +        : 文字を大きく
 -- Cmd + -        : 文字を小さく
 -- Cmd + 0        : 文字サイズをリセット
---
--- ペインサイズの変更:
--- Option + Shift + ←: ペインを左に縮小
--- Option + Shift + →: ペインを右に拡大
--- Option + Shift + ↑: ペインを上に縮小
--- Option + Shift + ↓: ペインを下に拡大
 --
 -- 透過度の調整:
 -- Ctrl + Cmd + ↑: 透過度を上げる (不透明に)

@@ -177,6 +177,7 @@ alias mkdir = ^mkdir -p
 
 # その他
 alias c = clear
+alias cc = claude --dangerously-skip-permissions
 alias h = history
 alias x = exit
 alias tl = tldr
@@ -199,8 +200,10 @@ def duf [] { df }
 def G [pattern: string] { rg $pattern }           # grep
 def H [n: int = 10] { first $n }                  # head
 def T [n: int = 10] { last $n }                   # tail
-def C [] { length }                               # count (wc -l)
 def J [...path: string] { if ($path | is-empty) { from json } else { from json | get ($path | str join ".") } }  # jq
+
+# エディタ
+alias C = ^open -a Cursor .                        # Cursorでカレントディレクトリを開く
 
 # =============================================================================
 # 便利な関数
@@ -492,23 +495,10 @@ def help-wezterm [] {
 
 【タブ操作】
   Cmd + T         新しいタブ
-  Cmd + W         タブ/ペインを閉じる
-  Cmd + 1-9       タブを切り替え
-  Cmd + Shift + [ 前のタブ
-  Cmd + Shift + ] 次のタブ
-
-【ペイン分割】
-  Cmd + D         縦にペイン分割（左右に分かれる）
-  Cmd + Shift + D 横にペイン分割（上下に分かれる）
-
-【ペイン移動】
-  Cmd + ←/→/↑/↓   ペイン間を移動
-
-【ペインサイズ変更】
-  Option + Shift + ←  ペインを左に縮小
-  Option + Shift + →  ペインを右に拡大
-  Option + Shift + ↑  ペインを上に縮小
-  Option + Shift + ↓  ペインを下に拡大
+  Cmd + D         新しいタブ
+  Cmd + W         タブを閉じる
+  Cmd + ←/→       前/次のタブへ移動
+  Cmd + 1-9       タブを番号で切り替え
 
 【透明度調整】
   Ctrl + Cmd + ↑  透明度を上げる（不透明に）

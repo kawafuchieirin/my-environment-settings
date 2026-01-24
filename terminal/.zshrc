@@ -182,6 +182,8 @@ alias mv='mv -i'
 
 # その他
 alias c='clear'
+alias cc='claude --dangerously-skip-permissions'
+alias C='open -a Cursor .'  # Cursorでカレントディレクトリを開く
 alias h='history'
 alias grep='grep --color=auto'
 alias x='exit'

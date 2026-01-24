@@ -131,7 +131,11 @@ $env.config = {
     highlight_resolved_externals: false
 }
 
+# =============================================================================
 # エイリアス
+# =============================================================================
+
+# 基本
 alias ll = ls -l
 alias la = ls -a
 alias lla = ls -la
@@ -142,6 +146,141 @@ alias top = btop
 alias vim = hx
 alias vi = hx
 alias rdock = killall Dock  # Dockを再起動
+
+# Git
+alias g = git
+alias gs = git status
+alias ga = git add
+alias gc = git commit
+alias gp = git push
+alias gl = git log --oneline --graph
+alias gd = git diff
+alias lg = lazygit
+
+# Python
+alias py = python
+alias py3 = python3
+alias pip = pip3
+alias venv = python -m venv
+# activate: Nushellではsourceは関数内で使用不可のため、手動で実行
+# 使用方法: overlay use .venv/bin/activate.nu
+def activate [] {
+    if (".venv/bin/activate.nu" | path exists) {
+        print "実行してください: overlay use .venv/bin/activate.nu"
+    } else {
+        print "エラー: .venv/bin/activate.nu が見つかりません"
+    }
+}
+
+# ディレクトリ操作
+alias mkdir = ^mkdir -p
+
+# その他
+alias c = clear
+alias h = history
+alias x = exit
+alias tl = tldr
+alias j = jq
+
+# クリップボード
+alias pbp = pbpaste
+alias pbc = pbcopy
+
+# ネットワーク
+def ip [] { http get https://ipinfo.io | from json }
+def localip [] { ^ipconfig getifaddr en0 }
+def ports [] { ^lsof -i -P -n | lines | find LISTEN }
+
+# ディスク使用量
+def duh [] { du | sort-by size --reverse }
+def duf [] { df }
+
+# パイプ用コマンド（zshのグローバルエイリアス相当）
+def G [pattern: string] { rg $pattern }           # grep
+def H [n: int = 10] { first $n }                  # head
+def T [n: int = 10] { last $n }                   # tail
+def C [] { length }                               # count (wc -l)
+def J [...path: string] { if ($path | is-empty) { from json } else { from json | get ($path | str join ".") } }  # jq
+
+# =============================================================================
+# 便利な関数
+# =============================================================================
+
+# ディレクトリ作成して移動
+def --env mkcd [dir: string] {
+    ^mkdir -p $dir
+    cd $dir
+}
+
+# Gitリポジトリのルートに移動
+def --env groot [] {
+    cd (git rev-parse --show-toplevel)
+}
+
+# カレントディレクトリのパスをクリップボードにコピー
+def cpwd [] {
+    pwd | str trim | pbcopy
+    print $"パスをコピーしました: (pwd)"
+}
+
+# 天気を表示
+def weather [city?: string] {
+    let location = if ($city | is-empty) { "Tokyo" } else { $city }
+    http get $"https://wttr.in/($location)?format=3"
+}
+
+# cheat.shでコマンドのヘルプを表示
+def cheat [cmd: string] {
+    http get $"https://cheat.sh/($cmd)"
+}
+
+# 圧縮ファイルを自動展開
+def extract [file: string] {
+    if ($file | path exists) {
+        let ext = ($file | path parse | get extension)
+        match $ext {
+            "zip" => { ^unzip $file },
+            "gz" => {
+                if ($file | str ends-with ".tar.gz") or ($file | str ends-with ".tgz") {
+                    ^tar xzf $file
+                } else {
+                    ^gunzip $file
+                }
+            },
+            "tgz" => { ^tar xzf $file },
+            "bz2" => {
+                if ($file | str ends-with ".tar.bz2") or ($file | str ends-with ".tbz2") {
+                    ^tar xjf $file
+                } else {
+                    ^bunzip2 $file
+                }
+            },
+            "tbz2" => { ^tar xjf $file },
+            "xz" => {
+                if ($file | str ends-with ".tar.xz") {
+                    ^tar xJf $file
+                } else {
+                    ^unxz $file
+                }
+            },
+            "tar" => { ^tar xf $file },
+            "7z" => { ^7z x $file },
+            "rar" => { ^unrar x $file },
+            _ => { print $"'($file)' は対応していない形式です" }
+        }
+    } else {
+        print $"'($file)' は有効なファイルではありません"
+    }
+}
+
+# 指定秒数後に通知
+def timer [seconds?: int] {
+    let sec = if ($seconds | is-empty) { 60 } else { $seconds }
+    print $"($sec)秒後に通知します..."
+    sleep ($sec * 1sec)
+    ^osascript -e 'display notification "タイマー完了" with title "Timer"'
+    print "完了!"
+}
 
 # zoxide の初期化
 source ~/.cache/zoxide.nu
@@ -179,6 +318,30 @@ def help [] {
   ff              fd（ファイル検索）
   top             btop（リソースモニター）
   vim / vi        hx（Helixエディタ）
+  c               clear（画面クリア）
+  h               history（履歴表示）
+  x               exit（終了）
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Git コマンド                                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+  g               git
+  gs              git status
+  ga              git add
+  gc              git commit
+  gp              git push
+  gd              git diff
+  gl              git log --oneline --graph
+  lg              lazygit（GUI風Git操作）
+  groot           Gitリポジトリのルートに移動
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Python                                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+  py              python
+  py3             python3
+  venv            python -m venv（仮想環境作成）
+  activate        仮想環境を有効化（.venv）
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ ディレクトリ移動                                                              │
@@ -186,6 +349,8 @@ def help [] {
   z <パス>        履歴ベースのスマートcd（zoxide）
   zi              インタラクティブにディレクトリ選択
   skcd            ファジー検索でディレクトリ移動（skim）
+  mkcd <dir>      ディレクトリ作成して移動
+  groot           Gitリポジトリのルートに移動
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ 検索                                                                         │
@@ -194,6 +359,36 @@ def help [] {
   fd <pattern>    高速ファイル検索
   sk              ファジーファインダー（skim）
   skhist          コマンド履歴をファジー検索
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ネットワーク                                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+  ip              グローバルIP表示
+  localip         ローカルIP表示
+  ports           使用中ポート一覧
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ その他便利コマンド                                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+  cpwd            カレントパスをクリップボードにコピー
+  duh             ディレクトリサイズ表示
+  duf             ディスク使用量表示
+  weather [都市]  天気表示（デフォルト: Tokyo）
+  timer [秒]      タイマー（デフォルト: 60秒）
+  cheat <cmd>     コマンドのヘルプ表示（cheat.sh）
+  extract <file>  圧縮ファイルを自動展開
+  tl              tldr（コマンドの使い方を簡潔に表示）
+  j               jq（JSONパーサー）
+  pbp / pbc       クリップボード（ペースト/コピー）
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ パイプ用コマンド                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+  | G <pattern>   grep（例: ls | G txt）
+  | H [n]         head（例: ls | H 5）
+  | T [n]         tail（例: ls | T 5）
+  | C             count（例: ls | C）
+  | J [key]       jq（例: open file.json | J data）
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ Nushell 基本操作                                                             │

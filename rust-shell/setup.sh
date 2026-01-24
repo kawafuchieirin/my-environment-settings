@@ -38,19 +38,20 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo ""
 echo "=== 設定ファイルを配置中 ==="
 
-# Nushell
+# Nushell (macOSでは ~/Library/Application Support/nushell/ を使用)
 echo "Nushell設定を配置中..."
-mkdir -p ~/.config/nushell
-if [ -f ~/.config/nushell/env.nu ] && [ ! -L ~/.config/nushell/env.nu ]; then
-    mv ~/.config/nushell/env.nu ~/.config/nushell/env.nu.backup.$(date +%Y%m%d%H%M%S)
+NU_CONFIG_DIR="$HOME/Library/Application Support/nushell"
+mkdir -p "$NU_CONFIG_DIR"
+if [ -f "$NU_CONFIG_DIR/env.nu" ] && [ ! -L "$NU_CONFIG_DIR/env.nu" ]; then
+    mv "$NU_CONFIG_DIR/env.nu" "$NU_CONFIG_DIR/env.nu.backup.$(date +%Y%m%d%H%M%S)"
     echo "  env.nu をバックアップしました"
 fi
-if [ -f ~/.config/nushell/config.nu ] && [ ! -L ~/.config/nushell/config.nu ]; then
-    mv ~/.config/nushell/config.nu ~/.config/nushell/config.nu.backup.$(date +%Y%m%d%H%M%S)
+if [ -f "$NU_CONFIG_DIR/config.nu" ] && [ ! -L "$NU_CONFIG_DIR/config.nu" ]; then
+    mv "$NU_CONFIG_DIR/config.nu" "$NU_CONFIG_DIR/config.nu.backup.$(date +%Y%m%d%H%M%S)"
     echo "  config.nu をバックアップしました"
 fi
-ln -sf "$SCRIPT_DIR/nushell/env.nu" ~/.config/nushell/env.nu
-ln -sf "$SCRIPT_DIR/nushell/config.nu" ~/.config/nushell/config.nu
+ln -sf "$SCRIPT_DIR/nushell/env.nu" "$NU_CONFIG_DIR/env.nu"
+ln -sf "$SCRIPT_DIR/nushell/config.nu" "$NU_CONFIG_DIR/config.nu"
 echo "  Nushell設定をシンボリックリンクで配置しました"
 
 # WezTerm

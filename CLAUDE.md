@@ -42,7 +42,9 @@ cd vscode && ./setup.sh       # VS Code設定
 
 ### rust-shell/
 - **Rust製ツール統一**: Nushell、WezTerm、Helix、Starship、zoxide、ripgrep、fd、skim、bat、btop
-- **設定ファイル配置先**: `~/.config/` 配下（nushell/, wezterm/, helix/, starship.toml）
+- **設定ファイル配置先**:
+  - Nushell: `~/Library/Application Support/nushell/`（macOS固有のパス）
+  - その他: `~/.config/` 配下（wezterm/, helix/, starship.toml）
 - **Draculaテーマ**: WezTermで使用、Helixはデフォルトテーマ
 - **Viモード**: NushellとHelixでViライクな操作（`edit_mode: vi`）
 - **LSP自動有効**: Helixは設定不要でLanguage Serverが動作

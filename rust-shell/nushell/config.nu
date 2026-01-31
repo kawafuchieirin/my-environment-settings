@@ -1,4 +1,56 @@
-# Nushell Config File
+# =============================================================================
+# Nushell Config File (config.nu)
+# =============================================================================
+#
+# 概要:
+#   Nushellのメイン設定ファイル。エイリアス、関数、外観設定を定義。
+#   Viモードを採用し、zshと同等のエイリアスを提供。
+#
+# 配置先:
+#   ~/Library/Application Support/nushell/config.nu（macOS）
+#   ~/.config/nushell/config.nu（Linux）
+#
+# 主な設定:
+#   - edit_mode: vi（Viライクな操作）
+#   - rm: always_trash（削除はゴミ箱へ）
+#   - history: SQLite形式、10万件保持
+#   - buffer_editor: hx（Helixエディタ）
+#
+# エイリアス:
+#   基本: ll, la, lla, cat(bat), grep(rg), vim(hx)
+#   Git: g, gs, ga, gc, gp, gl, gd, lg(lazygit)
+#   Python: py, py3, venv, activate
+#   その他: c(clear), h(history), x(exit)
+#
+# 便利な関数:
+#   mkcd <dir>       : ディレクトリ作成して移動
+#   groot            : Gitリポジトリのルートへ移動
+#   cpwd             : パスをクリップボードにコピー
+#   weather [都市]   : 天気表示
+#   cheat <cmd>      : コマンドのヘルプ
+#   extract <file>   : 圧縮ファイル展開
+#   timer [秒]       : タイマー
+#   skcd             : ファジー検索でディレクトリ移動
+#   skhist           : 履歴をファジー検索
+#
+# パイプ用コマンド:
+#   | G <pattern>    : grep
+#   | H [n]          : head
+#   | T [n]          : tail
+#   | J [key]        : jq
+#
+# ヘルプ:
+#   help             : 全コマンド一覧
+#   help-keys        : キーボードショートカット
+#   help-helix       : Helixエディタ
+#   help-wezterm     : WezTermショートカット
+#
+# カスタマイズ:
+#   - エイリアス: alias name = command
+#   - 関数: def funcname [] { ... }
+#   - 環境変数を変更する関数: def --env funcname [] { ... }
+#
+# =============================================================================
 # このファイルを ~/.config/nushell/config.nu にコピーしてください
 
 $env.config = {

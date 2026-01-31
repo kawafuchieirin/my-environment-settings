@@ -1,4 +1,31 @@
 #!/bin/bash
+# =============================================================================
+# terminal/setup.sh - zsh環境セットアップスクリプト
+# =============================================================================
+#
+# 概要:
+#   zshシェル環境をセットアップするスクリプト。Homebrew経由でCLIツールと
+#   zshプラグインをインストールし、設定ファイルをシンボリックリンクで配置。
+#
+# インストールされるツール:
+#   - Nerd Font (JetBrainsMono)
+#   - CLIツール: eza, bat, fzf, zoxide, ripgrep, delta, lazygit, tldr, jq
+#   - zshプラグイン: syntax-highlighting, autosuggestions, history-substring-search
+#   - Atuin: 高機能シェル履歴管理
+#   - pyenv: Pythonバージョン管理
+#
+# 配置される設定ファイル:
+#   ~/.zshrc      <- terminal/.zshrc（シンボリックリンク）
+#   ~/.gitconfig  <- terminal/.gitconfig（シンボリックリンク）
+#
+# 使用方法:
+#   cd terminal && ./setup.sh
+#
+# 注意:
+#   - 既存の設定ファイルは自動でバックアップされます
+#   - .zshrcの配置は確認プロンプトが表示されます
+#
+# =============================================================================
 set -e
 
 echo "=== macOS Terminal セットアップ ==="

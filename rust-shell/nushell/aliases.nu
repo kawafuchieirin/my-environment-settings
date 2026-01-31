@@ -58,7 +58,8 @@ alias mkdir = ^mkdir -p
 # -----------------------------------------------------------------------------
 alias c = clear
 alias cc = claude --dangerously-skip-permissions
-alias h = history
+# h: 重複を排除した履歴表示
+def h [n: int = 50] { history | last $n | uniq-by command | reverse }
 alias x = exit
 alias tl = tldr
 alias j = jq

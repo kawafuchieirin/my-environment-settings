@@ -180,11 +180,25 @@ PYENV_ROOT: $HOME/.pyenv
 - サフィックスエイリアス（拡張子用）は `alias -s` を使用
 - ヘルプテキストを追加する場合は `help()` 関数内のヒアドキュメントを更新
 
-### rust-shell/nushell/config.nu
-- エイリアス: `alias name = command` 形式で追加
-- 関数: `def funcname [] { ... }` 形式で定義
-- 環境変数を変更する関数: `def --env funcname [] { ... }` を使用
-- パイプ用コマンド: `def G [pattern: string] { rg $pattern }` のように引数の型を明示
+### rust-shell/nushell/（機能別に分割）
+
+ファイル構成:
+```
+nushell/
+├── config.nu     # メイン設定（$env.configと各ファイルのsource）
+├── env.nu        # 環境変数・PATH
+├── aliases.nu    # エイリアス定義
+├── functions.nu  # カスタム関数
+├── help.nu       # ヘルプコマンド
+└── local.nu      # ローカル設定（gitignore）
+```
+
+編集ガイドライン:
+- **エイリアス追加**: `aliases.nu` に `alias name = command` 形式で追加
+- **関数追加**: `functions.nu` に `def funcname [] { ... }` 形式で追加
+- **環境変数を変更する関数**: `def --env funcname [] { ... }` を使用
+- **パイプ用コマンド**: `def G [pattern: string] { rg $pattern }` のように引数の型を明示
+- **ヘルプ更新**: `help.nu` の該当関数を更新
 
 ### rust-shell/wezterm/wezterm.lua
 - キーバインド追加: `config.keys` テーブルに新しいエントリを追加

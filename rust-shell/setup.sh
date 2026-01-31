@@ -84,17 +84,23 @@ echo "=== 設定ファイルを配置中 ==="
 echo "Nushell設定を配置中..."
 NU_CONFIG_DIR="$HOME/Library/Application Support/nushell"
 mkdir -p "$NU_CONFIG_DIR"
-if [ -f "$NU_CONFIG_DIR/env.nu" ] && [ ! -L "$NU_CONFIG_DIR/env.nu" ]; then
-    mv "$NU_CONFIG_DIR/env.nu" "$NU_CONFIG_DIR/env.nu.backup.$(date +%Y%m%d%H%M%S)"
-    echo "  env.nu をバックアップしました"
-fi
-if [ -f "$NU_CONFIG_DIR/config.nu" ] && [ ! -L "$NU_CONFIG_DIR/config.nu" ]; then
-    mv "$NU_CONFIG_DIR/config.nu" "$NU_CONFIG_DIR/config.nu.backup.$(date +%Y%m%d%H%M%S)"
-    echo "  config.nu をバックアップしました"
-fi
-ln -sf "$SCRIPT_DIR/nushell/env.nu" "$NU_CONFIG_DIR/env.nu"
-ln -sf "$SCRIPT_DIR/nushell/config.nu" "$NU_CONFIG_DIR/config.nu"
+
+# 設定ファイル一覧（機能別に分割）
+NU_FILES=("env.nu" "config.nu" "aliases.nu" "functions.nu" "help.nu")
+
+for file in "${NU_FILES[@]}"; do
+    if [ -f "$NU_CONFIG_DIR/$file" ] && [ ! -L "$NU_CONFIG_DIR/$file" ]; then
+        mv "$NU_CONFIG_DIR/$file" "$NU_CONFIG_DIR/$file.backup.$(date +%Y%m%d%H%M%S)"
+        echo "  $file をバックアップしました"
+    fi
+    ln -sf "$SCRIPT_DIR/nushell/$file" "$NU_CONFIG_DIR/$file"
+done
 echo "  Nushell設定をシンボリックリンクで配置しました"
+echo "    - config.nu (メイン設定)"
+echo "    - env.nu (環境変数・PATH)"
+echo "    - aliases.nu (エイリアス)"
+echo "    - functions.nu (カスタム関数)"
+echo "    - help.nu (ヘルプコマンド)"
 
 # ローカル設定ファイル（存在しない場合のみ作成）
 if [ ! -f "$NU_CONFIG_DIR/local.nu" ]; then

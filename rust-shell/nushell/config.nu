@@ -574,3 +574,15 @@ def help-all [] {
     print ""
     help-wezterm
 }
+
+# =============================================================================
+# ローカル設定（機密情報など）
+# =============================================================================
+# local.nu は .gitignore に含まれるため、コミットされません。
+# 会社用の環境変数やAPIキーなどはこちらに記載してください。
+# テンプレート: local.nu.example
+#
+# セットアップ: setup.shが空のlocal.nuを自動作成します。
+# 編集方法: hx ~/Library/Application\ Support/nushell/local.nu
+
+source $"($nu.default-config-dir)/local.nu"

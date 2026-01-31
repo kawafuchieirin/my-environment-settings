@@ -96,6 +96,24 @@ ln -sf "$SCRIPT_DIR/nushell/env.nu" "$NU_CONFIG_DIR/env.nu"
 ln -sf "$SCRIPT_DIR/nushell/config.nu" "$NU_CONFIG_DIR/config.nu"
 echo "  Nushell設定をシンボリックリンクで配置しました"
 
+# ローカル設定ファイル（存在しない場合のみ作成）
+if [ ! -f "$NU_CONFIG_DIR/local.nu" ]; then
+    cat > "$NU_CONFIG_DIR/local.nu" << 'EOF'
+# =============================================================================
+# local.nu - ローカル専用設定
+# =============================================================================
+# このファイルはコミットされません。
+# 会社用の環境変数やAPIキーなどを記載してください。
+# テンプレート: rust-shell/nushell/local.nu.example
+# =============================================================================
+
+# 例:
+# $env.COMPANY_API_KEY = "your-api-key"
+# alias vpn = sudo openconnect vpn.company.com
+EOF
+    echo "  local.nu を作成しました（機密情報用）"
+fi
+
 # WezTerm
 echo "WezTerm設定を配置中..."
 mkdir -p ~/.config/wezterm

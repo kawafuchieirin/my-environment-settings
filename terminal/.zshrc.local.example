@@ -1,0 +1,55 @@
+# =============================================================================
+# .zshrc.local - ローカル専用設定（例）
+# =============================================================================
+#
+# このファイルを .zshrc.local にコピーして使用してください。
+# .zshrc.local は .gitignore に含まれているため、コミットされません。
+#
+# 使用方法:
+#   cp .zshrc.local.example .zshrc.local
+#   vim .zshrc.local
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 会社用の環境変数（例）
+# -----------------------------------------------------------------------------
+
+# APIキー
+# export COMPANY_API_KEY="your-api-key-here"
+# export AWS_ACCESS_KEY_ID="your-aws-key"
+# export AWS_SECRET_ACCESS_KEY="your-aws-secret"
+
+# データベース接続
+# export DATABASE_URL="postgres://user:password@host:5432/dbname"
+
+# 内部サービス
+# export INTERNAL_SERVICE_URL="https://internal.company.com"
+# export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/xxx"
+
+# -----------------------------------------------------------------------------
+# 会社用のエイリアス（例）
+# -----------------------------------------------------------------------------
+
+# 社内ツール
+# alias vpn='sudo openconnect vpn.company.com'
+# alias jira='open https://company.atlassian.net'
+# alias confluence='open https://company.atlassian.net/wiki'
+
+# 社内サーバー接続
+# alias ssh-dev='ssh user@dev.company.com'
+# alias ssh-prod='ssh user@prod.company.com'
+
+# -----------------------------------------------------------------------------
+# 会社用のPATH（例）
+# -----------------------------------------------------------------------------
+
+# export PATH="$HOME/company-tools/bin:$PATH"
+
+# -----------------------------------------------------------------------------
+# 個人用の設定（例）
+# -----------------------------------------------------------------------------
+
+# 個人プロジェクト
+# export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
+# export OPENAI_API_KEY="sk-xxxxxxxxxxxx"

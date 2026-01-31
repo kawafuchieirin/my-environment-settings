@@ -666,3 +666,16 @@ EOF
 }
 
 alias help-all='help && echo "" && help-git && echo "" && help-fzf && echo "" && help-keys'
+
+# =============================================================================
+# ローカル設定（機密情報など）
+# =============================================================================
+# .zshrc.local は .gitignore に含まれるため、コミットされません。
+# 会社用の環境変数やAPIキーなどはこちらに記載してください。
+# テンプレート: .zshrc.local.example
+
+if [[ -f "$HOME/.zshrc.local" ]]; then
+    source "$HOME/.zshrc.local"
+elif [[ -f "${0:A:h}/.zshrc.local" ]]; then
+    source "${0:A:h}/.zshrc.local"
+fi

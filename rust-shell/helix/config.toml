@@ -1,4 +1,41 @@
-# Helix Editor Configuration
+# =============================================================================
+# Helix Editor Configuration (config.toml)
+# =============================================================================
+#
+# 概要:
+#   Helixエディタの基本設定ファイル。エディタの動作、外観、
+#   キーバインドをカスタマイズ。
+#
+# 配置先:
+#   ~/.config/helix/config.toml（シンボリックリンク）
+#
+# 主な設定:
+#   - theme: tokyonight（カラースキーム）
+#   - line-number: relative（相対行番号）
+#   - edit_mode: vi（Viライクな操作）
+#   - auto-format/auto-save: 有効
+#   - LSP: インレイヒント、自動署名ヘルプ有効
+#
+# キーバインド（Space + キー）:
+#   Space + f    : ファイルピッカー
+#   Space + b    : バッファピッカー
+#   Space + s    : シンボルピッカー
+#   Space + w + v: 縦分割
+#   Space + w + s: 横分割
+#   Space + l + r: リネーム
+#   Space + l + a: コードアクション
+#   Ctrl + s     : 保存
+#   Ctrl + q     : 終了
+#
+# カスタマイズ:
+#   - [keys.normal]セクションでキーバインド追加
+#   - themeを変更する場合: :theme <name> で確認後、設定を更新
+#
+# 参考:
+#   - :tutor で操作チュートリアル
+#   - help-helix コマンドでヘルプ表示
+#
+# =============================================================================
 # このファイルを ~/.config/helix/config.toml にコピーしてください
 
 theme = "tokyonight"

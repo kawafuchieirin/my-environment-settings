@@ -1,4 +1,45 @@
-# Helix Languages Configuration
+# =============================================================================
+# Helix Languages Configuration (languages.toml)
+# =============================================================================
+#
+# 概要:
+#   Helixエディタの言語別設定ファイル。各言語のLSP（Language Server）、
+#   フォーマッター、自動フォーマットの設定を定義。
+#
+# 配置先:
+#   ~/.config/helix/languages.toml（シンボリックリンク）
+#
+# 対応言語と設定:
+#   Rust:
+#     - LSP: rust-analyzer
+#     - clippy有効、procMacro有効
+#
+#   TypeScript/JavaScript:
+#     - LSP: typescript-language-server
+#     - フォーマッター: prettier
+#
+#   Python:
+#     - LSP: pylsp
+#     - フォーマッター: black
+#     - ruff有効
+#
+#   Go:
+#     - LSP: gopls
+#     - フォーマッター: gofmt
+#
+#   その他: JSON, YAML, TOML, Markdown, HTML, CSS, Lua, Nushell
+#
+# LSPのインストール:
+#   brew install rust-analyzer gopls lua-language-server
+#   npm install -g typescript-language-server prettier
+#   pip install python-lsp-server black ruff
+#   cargo install taplo-cli
+#
+# カスタマイズ:
+#   - [[language]]セクションで新しい言語を追加
+#   - formatterやlanguage-serversを変更可能
+#
+# =============================================================================
 # このファイルを ~/.config/helix/languages.toml にコピーしてください
 
 # Rust

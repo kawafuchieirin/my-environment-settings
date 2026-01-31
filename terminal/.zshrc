@@ -1,4 +1,31 @@
 # =============================================================================
+# .zshrc - Zshシェル設定ファイル
+# =============================================================================
+#
+# 概要:
+#   macOS用のzsh設定ファイル。Oh My Zshを使用せず、Homebrewで個別にプラグインを
+#   インストールする軽量構成。モダンCLIツール（eza, bat, fzf, zoxide等）を活用。
+#
+# 依存関係:
+#   - Homebrew
+#   - zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search
+#   - eza, bat, fzf, zoxide, ripgrep, delta, lazygit, atuin
+#
+# セットアップ:
+#   cd terminal && ./setup.sh
+#
+# カスタマイズ:
+#   - エイリアス追加: 該当セクション（Git, Python等）に追加
+#   - 新ツール: `command -v` でインストールチェックしてから設定
+#   - 関数追加: 「# 関数」セクションに追加
+#
+# ヘルプ:
+#   help          - 全コマンド一覧
+#   help-git      - Git関連コマンド
+#   help-fzf      - fzf関連コマンド
+#   help-keys     - キーボードショートカット
+#
+# =============================================================================
 # 基本的なzsh設定（Oh My Zshなし）
 # =============================================================================
 
@@ -35,6 +62,7 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
+setopt HIST_IGNORE_DUPS      # 同じコマンドを履歴に残さない（連続時）
 setopt HIST_IGNORE_ALL_DUPS  # 重複する履歴を保存しない
 setopt HIST_SAVE_NO_DUPS     # 履歴ファイルに重複して保存しない
 setopt SHARE_HISTORY         # 複数のzshセッション間で履歴を共有

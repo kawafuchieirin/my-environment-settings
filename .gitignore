@@ -1,0 +1,9 @@
+# ローカル設定（機密情報）
+terminal/.zshrc.local
+rust-shell/nushell/local.nu
+
+# macOS
+.DS_Store
+
+# バックアップファイル
+*.backup.*

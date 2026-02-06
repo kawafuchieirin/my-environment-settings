@@ -1,35 +1,26 @@
 # my-environment-settings
 
-macOS開発環境設定を管理するリポジトリ。
+macOS開発環境のシェル設定を管理するリポジトリ。
 
-## 環境
+## 構成
 
-2つのシェル環境を提供（どちらか一方を選択）:
-
-- **terminal/**: zsh + モダンCLIツール
-- **rust-shell/**: Nushell + Rust製ツール
+| ディレクトリ | 内容 |
+|-------------|------|
+| `zsh/` | zsh設定 |
+| `nushell/` | Nushell設定 |
+| `wezterm/` | WezTerm設定 |
+| `starship/` | Starshipプロンプト設定 |
+| `shared/` | 共通設定定義（YAML） |
 
 ## セットアップ
 
 ```bash
-# マスターセットアップ
 ./setup.sh
-
-# 個別セットアップ
-cd terminal && ./setup.sh     # zsh環境
-cd rust-shell && ./setup.sh   # Nushell環境
-cd macos && ./setup.sh        # macOS設定
-cd vscode && ./setup.sh       # VS Code設定
 ```
 
-## ディレクトリ構成
+## ローカル設定
 
-```
-.
-├── terminal/      # zsh設定
-├── rust-shell/    # Nushell + WezTerm + Helix
-├── macos/         # macOSシステム設定
-├── vscode/        # VS Code設定
-├── shared/        # 共通設定
-└── setup.sh       # マスターセットアップ
-```
+機密情報は以下のファイルに記載（gitignore対象）:
+
+- `zsh/.zshrc.local`
+- `nushell/local.nu`

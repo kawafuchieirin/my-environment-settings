@@ -11,4 +11,11 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend [
     $"($env.HOME)/.local/bin"
     $"($env.HOME)/.cargo/bin"
     "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
 ])
+
+# ==============================================================================
+# Starship
+# ==============================================================================
+mkdir ~/.cache/starship
+starship init nu | save -f ~/.cache/starship/init.nu

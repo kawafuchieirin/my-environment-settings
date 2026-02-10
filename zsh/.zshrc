@@ -16,9 +16,11 @@ export PATH="/opt/homebrew/sbin:$PATH"
 # エイリアス
 # ==============================================================================
 
-# ファイル操作
-alias ll='ls -lah'
-alias la='ls -A'
+# ファイル操作（eza）
+alias ls='eza --icons'
+alias ll='eza -l --icons --git'
+alias la='eza -la --icons --git'
+alias tree='eza --tree --icons'
 
 # Git
 alias g='git'
@@ -29,8 +31,11 @@ alias gp='git push'
 alias gl='git log --oneline'
 alias gd='git diff'
 
-# その他
-alias c='clear'
+
+# ==============================================================================
+# プラグイン
+# ==============================================================================
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ==============================================================================
 # Starship

@@ -1,0 +1,6 @@
+# フォント
+font-family = JetBrains Mono
+font-size = 14
+
+# シェル
+shell-integration = zsh

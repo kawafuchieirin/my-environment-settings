@@ -18,35 +18,17 @@ backup_and_link() {
 }
 
 echo "=== 環境セットアップ ==="
-echo ""
-echo "1) zsh"
-echo "2) Nushell"
-echo "3) 両方"
-echo ""
-read -p "選択 [1-3]: " shell_choice
 
 # zsh
-if [ "$shell_choice" = "1" ] || [ "$shell_choice" = "3" ]; then
-    echo ""
-    echo "--- zsh ---"
-    backup_and_link "$SCRIPT_DIR/zsh/.zshrc" ~/.zshrc
-fi
-
-# Nushell
-if [ "$shell_choice" = "2" ] || [ "$shell_choice" = "3" ]; then
-    echo ""
-    echo "--- Nushell ---"
-    NUSHELL_DIR=~/Library/Application\ Support/nushell
-    mkdir -p "$NUSHELL_DIR"
-    backup_and_link "$SCRIPT_DIR/nushell/env.nu" "$NUSHELL_DIR/env.nu"
-    backup_and_link "$SCRIPT_DIR/nushell/config.nu" "$NUSHELL_DIR/config.nu"
-fi
-
-# WezTerm
 echo ""
-echo "--- WezTerm ---"
-mkdir -p ~/.config/wezterm
-backup_and_link "$SCRIPT_DIR/wezterm/wezterm.lua" ~/.config/wezterm/wezterm.lua
+echo "--- zsh ---"
+backup_and_link "$SCRIPT_DIR/zsh/.zshrc" ~/.zshrc
+
+# Ghostty
+echo ""
+echo "--- Ghostty ---"
+mkdir -p ~/.config/ghostty
+backup_and_link "$SCRIPT_DIR/ghostty/config" ~/.config/ghostty/config
 
 # Starship
 echo ""

@@ -31,6 +31,12 @@ alias gp='git push'
 alias gl='git log --oneline'
 alias gd='git diff'
 
+# Claude
+alias cc='claude --dangerously-skip-permissions'
+
+# Cursor
+alias x='cursor .'
+
 
 # ==============================================================================
 # プラグイン

@@ -5,12 +5,6 @@ export LANG=ja_JP.UTF-8
 export EDITOR=hx
 
 # ==============================================================================
-# API Key
-# ==============================================================================
-export QUANTS_API_V2_API_KEY="QUiku1dfCs0pl1f1sWZk4mgfxjqMS26BghDkerHAXWM"
-export GEMINI_API_KEY="AIzaSyAXp6Jkg9of8Pin-WFriz7O0lyTZwmDdJ0"
-
-# ==============================================================================
 # PATH
 # ==============================================================================
 export PATH="$HOME/.local/bin:$PATH"

@@ -1,22 +1,53 @@
-# Starship設定
-
 format = """
+$os\
 $directory\
 $git_branch\
 $git_status\
+$python\
+$rust\
+$nodejs\
+$line_break\
 $character"""
+
+[os]
+disabled = false
+style = "bold white"
+
+[os.symbols]
+Macos = " "
 
 [directory]
 truncation_length = 3
 truncate_to_repo = true
+style = "bold cyan"
+read_only = " 🔒"
 
 [git_branch]
-format = "[$branch]($style) "
+symbol = " "
+format = "[$symbol$branch]($style) "
 style = "bold purple"
 
 [git_status]
 format = '([$all_status$ahead_behind]($style) )'
 style = "bold red"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+modified = "!${count}"
+staged = "+${count}"
+untracked = "?${count}"
+
+[python]
+symbol = " "
+format = '[$symbol$version]($style) '
+
+[rust]
+symbol = " "
+format = '[$symbol$version]($style) '
+
+[nodejs]
+symbol = " "
+format = '[$symbol$version]($style) '
 
 [character]
 success_symbol = "[❯](bold green)"

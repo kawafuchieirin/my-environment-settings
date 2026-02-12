@@ -1,6 +1,12 @@
-# フォント
-font-family = JetBrains Mono
+# Font
+font-family = Iosevka
+font-family-bold = Iosevka
+font-family-italic = Iosevka
 font-size = 14
 
-# シェル
+# Background
+background-opacity = 0.8
+background-blur = true
+
+# Shell
 shell-integration = zsh

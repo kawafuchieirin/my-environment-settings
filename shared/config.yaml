@@ -15,9 +15,11 @@ path:
 
 # エイリアス
 aliases:
-  # ファイル操作
-  ll: ls -lah
-  la: ls -A
+  # ファイル操作（eza）
+  ls: eza --icons
+  ll: eza -l --icons --git
+  la: eza -la --icons --git
+  tree: eza --tree --icons
 
   # Git
   g: git
